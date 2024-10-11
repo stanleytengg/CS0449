@@ -1,0 +1,45 @@
+# Ignore all files by default
+*
+
+# Don't ignore directories, so we can recurse into them
+!*/
+
+# Don't ignore .gitignore
+!.gitignore
+
+# Don't ignore Makefile
+!Makefile
+
+# Don't ignore source code files
+!*.c
+!*.h
+
+# Ignore .bmp files
+*.bmp
+
+# Don't ignore README files
+!README*
+
+# Ignore object files
+*.o
+
+# Ignore the compiled executable 
+bmp_steganography
+
+# Ignore common editor backup files
+*~
+*.swp
+*.swo
+
+# Ignore OS generated files
+.DS_Store
+Thumbs.db
+
+# Ignore any files in a build directory
+build/
+
+# Ignore any files in a bin directory
+bin/
+
+# Ignore any files in a obj directory
+obj/
