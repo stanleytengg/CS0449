@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include <stdint.h>
 
+#define CHUNK_SIZE 4096
+
 #pragma pack(1)
 typedef struct {
     uint16_t identifier;

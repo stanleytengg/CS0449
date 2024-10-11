@@ -73,6 +73,35 @@ int main(int argc, char *argv[]) {
         fclose(file);
     }
 
+    else if (strcmp(argv[1], "--superreveal") == 0) {
+        // Check if there's any error
+        if (!validate(argc, argv, &file, &bmpheader, &dibheader)) return 1;
+
+        unsigned char buffer[CHUNK_SIZE];
+        size_t bytesRead;
+        long position = bmpheader.offset;
+
+        fseek(file, position, SEEK_SET);
+
+        while ((bytesRead = fread(buffer, 1, CHUNK_SIZE, file)) > 0) {
+
+            // Loop through all pixels in the chunk
+            for (size_t i = 0; i < bytesRead; i += 3) {
+                // Process each pixel in the buffer
+                buffer[i] = (buffer[i] << 4) | (buffer[i] >> 4);
+                buffer[i+1] = (buffer[i+1] << 4) | (buffer[i+1] >> 4);
+                buffer[i+2] = (buffer[i+2] << 4) | (buffer[i+2] >> 4);
+            }
+
+            // Write back the modified buffer
+            fseek(file, position, SEEK_SET);
+            fwrite(buffer, 1, bytesRead, file);
+            position += bytesRead;
+        }
+
+        fclose(file);
+    }
+
     else if (strcmp(argv[1], "--hide") == 0) {
         FILE *file2 = NULL;
         BMPHeader bmpheader2;
