@@ -1,30 +1,11 @@
-# Ignore all files by default
-*
-
-# Don't ignore directories, so we can recurse into them
-!*/
-
-# Don't ignore .gitignore
-!.gitignore
-
-# Don't ignore Makefile
-!Makefile
-
-# Don't ignore source code files
-!*.c
-!*.h
-
-# Ignore .bmp files
-*.bmp
-
-# Don't ignore README files
-!README*
-
 # Ignore object files
 *.o
 
 # Ignore the compiled executable 
 bmp_steganography
+
+# Ignore .bmp files
+*.bmp
 
 # Ignore common editor backup files
 *~
