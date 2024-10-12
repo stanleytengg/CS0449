@@ -4,9 +4,6 @@
 # Ignore the compiled executable 
 bmp_steganography
 
-# Ignore .bmp files
-*.bmp
-
 # Ignore common editor backup files
 *~
 *.swp
