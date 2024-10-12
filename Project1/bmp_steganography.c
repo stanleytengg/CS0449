@@ -147,6 +147,41 @@ int main(int argc, char *argv[]) {
         fclose(file2);
     }
 
+    else if (strcmp(argv[1], "--superhide") == 0) {
+        FILE *file2 = NULL;
+        BMPHeader bmpheader2;
+        DIBHeader dibheader2;
+
+        // Check if there's any error
+        if (!vaidateHide(argc, argv, &file, &file2, &bmpheader, &bmpheader2, &dibheader, &dibheader2))
+            return 1;
+
+        unsigned char buffer[CHUNK_SIZE], buffer2[CHUNK_SIZE];
+        size_t bytesRead, bytesRead2;
+        long position = bmpheader.offset;
+
+        fseek(file, position, SEEK_SET);
+
+        while ((bytesRead = fread(buffer, 1, CHUNK_SIZE, file)) > 0 &&
+                (bytesRead2 = fread(buffer2, 1, CHUNK_SIZE, file2)) > 0) {
+
+            // Loop through all pixels in the chunk
+            for (size_t i = 0; i < bytesRead; i += 3) {
+                // Process each pixel in the buffer
+                buffer[i] = (buffer[i] & 0xF0) | (buffer2[i] >> 4);
+                buffer[i+1] = (buffer[i+1] & 0xF0) | (buffer2[i+1] >> 4);
+                buffer[i+2] = (buffer[i+2] & 0xF0) | (buffer2[i+2] >> 4);
+            }
+
+            // Write back the modified buffer
+            fseek(file, position, SEEK_SET);
+            fwrite(buffer, 1, bytesRead, file);
+            position += bytesRead;
+        }
+
+        fclose(file);
+    }
+
     else {
         printf("ERROR: wrong arguments\n");
         return 1;
